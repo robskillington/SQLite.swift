@@ -738,7 +738,7 @@ public struct QueryGenerator: GeneratorType {
     private lazy var columnNames: [String: Int] = {
         var (columnNames, idx) = ([String: Int](), 0)
         column: for each in self.query.columns ?? [Expression<Void>(literal: "*")] {
-            let pair = split(each.expression.SQL.characters) { $0 == "." }.map { String($0) }
+            let pair = each.expression.SQL.characters.split { $0 == "." }.map { String($0) }
             let (tableName, column) = (pair.count > 1 ? pair.first : nil, pair.last!)
 
             func expandGlob(namespace: Bool) -> Query -> Void {
